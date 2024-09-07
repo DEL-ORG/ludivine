@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                // Add your deploy steps here
+            }
+        }
+        stage('Deploy2') {
+            steps {
+                echo 'Deploying...'
+                // Add your deploy steps here
+            }
+        }
+        stage('Test Java Code') {
+            agent {
+                docker { image 'maven:3.8.1-openjdk-17' }
+            }
+            steps {
+                dir('do-it-yourself/src/ui') {
+                    sh '''
+                    mvn clean install
+                    mvn test
+                    '''
+                }
+            }
+        }
+    }
+}
